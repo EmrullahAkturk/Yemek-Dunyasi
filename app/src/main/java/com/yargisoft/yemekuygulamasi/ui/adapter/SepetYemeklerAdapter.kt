@@ -3,11 +3,16 @@ package com.yargisoft.yemekuygulamasi.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler
 import com.yargisoft.yemekuygulamasi.databinding.CardTasarimYemekBinding
 import com.yargisoft.yemekuygulamasi.databinding.SepetTasarimYemekBinding
+import com.yargisoft.yemekuygulamasi.ui.fragment.AnaSayfaFragmentDirections
+import com.yargisoft.yemekuygulamasi.ui.fragment.SepetFragmentDirections
+import com.yargisoft.yemekuygulamasi.ui.fragment.SepetToDetayFragmentDirections
+import com.yargisoft.yemekuygulamasi.ui.fragment.YemekDetayFragmentDirections
 import com.yargisoft.yemekuygulamasi.ui.viewModel.SepetViewModel
 
 class SepetYemeklerAdapter(
@@ -43,7 +48,28 @@ class SepetYemeklerAdapter(
         val url = "http://kasimadalan.pe.hu/yemekler/resimler/${sepetYemek.yemek_resim_adi}"
         Glide.with(mContext).load(url).override(300, 300).into(t.imageViewSepet)
 
-        t.btnIncreaseQuantity
+        t.btnDecreaseQuantity.setOnClickListener {
+            var sepettekiAdet = sepetYemek.yemek_siparis_adet
+            if(sepettekiAdet <= 1){
+                viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id,sepetYemek.kullanici_adi)
+            }else{
+                viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id,sepetYemek.kullanici_adi)
+                viewModel.sepeteEkle(sepetYemek.yemek_adi,sepetYemek.yemek_resim_adi,sepetYemek.yemek_fiyat, -1 , sepetYemek.kullanici_adi)
+            }
+        }
+
+        t.btnIncreaseQuantity.setOnClickListener {
+            var sepettekiAdet = sepetYemek.yemek_siparis_adet
+            viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id,sepetYemek.kullanici_adi)
+            viewModel.sepeteEkle(sepetYemek.yemek_adi,sepetYemek.yemek_resim_adi,sepetYemek.yemek_fiyat, 1  , sepetYemek.kullanici_adi)
+        }
+
+        t.urunCardView.setOnClickListener {
+            val gecis = SepetFragmentDirections.sepetToDetay(sepetYemek=sepetYemek)
+            Navigation.findNavController(it).navigate(gecis)
+        }
+
+
 
     }
 

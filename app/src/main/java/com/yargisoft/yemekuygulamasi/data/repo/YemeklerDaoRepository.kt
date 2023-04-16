@@ -1,6 +1,7 @@
 package com.yargisoft.yemekuygulamasi.data.repo
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
@@ -80,6 +81,7 @@ class YemeklerDaoRepository {
     fun sepettenYemekSil(sepet_yemek_id: Int, kullanici_adi: String) {
         ydao.sepettenYemekSil(sepet_yemek_id, kullanici_adi).enqueue(object : Callback<CRUDCevap> {
             override fun onResponse(call: Call<CRUDCevap>, response: Response<CRUDCevap>) {
+                sepettekiYemekler()
             }
             override fun onFailure(call: Call<CRUDCevap>, t: Throwable) {
             }
@@ -130,6 +132,7 @@ class YemeklerDaoRepository {
                 override fun onResponse(call: Call<CRUDCevap>, response: Response<CRUDCevap>) {
                     println(CRUDCevap(1, "hata").success)
                     sepettekiYemekler()
+                    //Toast.makeText(,"Ürün sepete Eklendi",Toast.LENGTH_LONG).show()
                 }
 
                 override fun onFailure(call: Call<CRUDCevap>, t: Throwable) {

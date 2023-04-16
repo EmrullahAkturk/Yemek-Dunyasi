@@ -4,21 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="viewModelYemekDetay"
-            type="com.yargisoft.yemekuygulamasi.ui.viewModel.YemekDetayViewModel" />
-        <variable
-            name="yemekDetayFragment"
-            type="com.yargisoft.yemekuygulamasi.ui.fragment.YemekDetayFragment" />
-
-        <variable
-            name="yemekNesnesi"
-            type="com.yargisoft.yemekuygulamasi.data.entity.Yemekler" />
-        <variable
-            name="yemekFiyat"
-            type="String" />
+       <variable
+           name="sepetToDetayFragment"
+           type="com.yargisoft.yemekuygulamasi.ui.fragment.SepetToDetayFragment" />
         <variable
             name="toolbarTitle"
+            type="String" />
+        <variable
+            name="yemekNesnesi"
+            type="com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler" />
+        <variable
+            name="yemekFiyat"
             type="String" />
 
     </data>
@@ -28,18 +24,19 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bgColor">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabSepetDetay"
+                android:id="@+id/fabSepetToDetay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:clickable="true"
-                android:onClick="@{() -> yemekDetayFragment.fabSepetTikla(fabSepetDetay)}"
+                android:onClick="@{() -> sepetToDetayFragment.fabSepetTikla(fabSepetToDetay)}"
                 app:backgroundTint="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,21 +44,21 @@
                 app:tint="@android:color/white" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAnaSayfaDetay"
+                android:id="@+id/fabSepetToAnaSayfa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
                 android:clickable="true"
-                android:onClick="@{() -> yemekDetayFragment.fabAnaSayfaTikla(fabAnaSayfaDetay)}"
+                android:onClick="@{() -> sepetToDetayFragment.fabAnaSayfaTikla(fabSepetToAnaSayfa)}"
                 app:backgroundTint="@color/textColor"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
                 app:srcCompat="@drawable/ic_home_white"
                 app:tint="@android:color/white" />
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarDetay"
+                android:id="@+id/toolbarSepetDetay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -74,7 +71,7 @@
                 app:titleTextColor="@android:color/holo_red_dark">
 
                 <TextView
-                    android:id="@+id/tvToolbar"
+                    android:id="@+id/tvToolbarDetay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
@@ -91,15 +88,14 @@
             </androidx.appcompat.widget.Toolbar>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbarDetay"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarSepetDetay"
                 tools:layout_editor_absoluteX="0dp">
 
                 <TextView
-                    android:id="@+id/tvyemekDetay"
+                    android:id="@+id/tvSepetYemekDetay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
@@ -113,7 +109,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/detayImageView"
+                    android:id="@+id/sepetDetayImageView"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_marginTop="32dp"
@@ -121,10 +117,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvyemekDetay" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvSepetYemekDetay" />
 
                 <TextView
-                    android:id="@+id/yemekDetayAd"
+                    android:id="@+id/sepetYemekDetayAd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="26dp"
@@ -134,10 +130,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/detayImageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/sepetDetayImageView" />
 
                 <TextView
-                    android:id="@+id/yemekDetayFiyat"
+                    android:id="@+id/yemekSepetDetayFiyat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -146,22 +142,22 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/yemekDetayAd" />
+                    app:layout_constraintTop_toBottomOf="@+id/sepetYemekDetayAd" />
 
                 <Button
-                    android:id="@+id/btnSepeteEkle"
+                    android:id="@+id/btnDetaySepeteEkle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
                     android:backgroundTint="@color/textColor"
-                    android:onClick='@{()->yemekDetayFragment.sepeteEkle(yemekNesnesi.yemek_adi,yemekNesnesi.yemek_resim_adi,yemekNesnesi.yemek_fiyat,1,"emrullah")}'
+                    android:onClick='@{()->sepetToDetayFragment.sepeteEkle(yemekNesnesi.yemek_adi,yemekNesnesi.yemek_resim_adi,yemekNesnesi.yemek_fiyat,1,"emrullah")}'
                     android:text="Sepete Ekle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/yemekDetayFiyat" />
+                    app:layout_constraintTop_toBottomOf="@+id/yemekSepetDetayFiyat" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#675858">
+        android:background="#F4F4F6">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,11 +32,15 @@
                 android:id="@+id/toolbarAnaSayfa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#8A6E6E"
+                android:background="#FFFFFF"
                 android:contextClickable="true"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:titleTextColor="@android:color/holo_red_dark">
 
                 <TextView
@@ -47,6 +51,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/abeezee"
                     android:text="Yemek Dünyası"
+                    android:textColor="@color/textColor"
                     android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -88,7 +93,7 @@
                             android:layout_marginTop="11dp"
                             android:fontFamily="@font/abeezee"
                             android:text="Türk Mutfağı"
-                            android:textColor="@color/white"
+                            android:textColor="@color/textColor"
                             android:textSize="20sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -119,10 +124,11 @@
             android:layout_marginBottom="16dp"
             android:clickable="true"
             android:onClick="@{() -> anaSayfaFragment.fabTikla(fabSepet)}"
-            app:backgroundTint="#8A6E6E"
+            app:backgroundTint="@color/textColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_sepet" />
+            app:srcCompat="@drawable/ic_sepet"
+            app:tint="@android:color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

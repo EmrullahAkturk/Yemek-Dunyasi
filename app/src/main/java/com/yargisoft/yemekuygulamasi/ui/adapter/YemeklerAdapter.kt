@@ -49,11 +49,10 @@ class YemeklerAdapter(
         val url = "http://kasimadalan.pe.hu/yemekler/resimler/${yemek.yemek_resim_adi}"
         Glide.with(mContext).load(url).override(300, 300).into(t.yemekResim)
 
-        t.yemekResim.setOnClickListener {
+        t.cardAnaSayfa.setOnClickListener {
             val gecis = AnaSayfaFragmentDirections.yemekDetayGecis(yemek = yemek)
             Navigation.findNavController(it).navigate(gecis)
         }
-
 
 
     }

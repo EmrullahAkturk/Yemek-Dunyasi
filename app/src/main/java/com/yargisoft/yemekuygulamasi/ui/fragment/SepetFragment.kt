@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.yargisoft.yemekuygulamasi.R
@@ -28,8 +29,12 @@ class SepetFragment : Fragment() {
         binding.rvSepet.layoutManager =StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         viewModel.sepetYemekListesi.observe(viewLifecycleOwner) {
-           val adapter = SepetYemeklerAdapter(requireContext(), it, viewModel)
-            binding.sepetYemekAdapter = adapter
+            if(viewModel.sepetYemekListesi.value!!.size ==  0) {
+                binding.urunYazisi = "Sepetinizde ürün yok"
+            }else{
+                val adapter = SepetYemeklerAdapter(requireContext(), it, viewModel)
+                binding.sepetYemekAdapter = adapter
+            }
         }
 
         return binding.root
@@ -39,13 +44,16 @@ class SepetFragment : Fragment() {
         val tempViewModel : SepetViewModel by viewModels()
         viewModel = tempViewModel
     }
-    fun sepetiTemizle(it:View){
-        viewModel.sepetiTemizle(it)
-    }
 
     override fun onResume() {
         super.onResume()
         viewModel.sepettekiYemekleriYukle()
+    }
+    fun sepetiTemizle(it:View){
+        viewModel.sepetiTemizle(it)
+    }
+    fun fabAnaSayfa(it:View){
+        Navigation.findNavController(it).navigate(R.id.sepetToAnaSayfa)
     }
 
 }
