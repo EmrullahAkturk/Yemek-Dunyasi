@@ -6,8 +6,8 @@ import com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler
 import com.yargisoft.yemekuygulamasi.data.repo.YemeklerDaoRepository
 
 class SepetToDetayViewModel: ViewModel() {
-    val ydao = YemeklerDaoRepository()
-    val sepetYemekListesi : MutableLiveData<List<SepetYemekler>>
+    private val ydao = YemeklerDaoRepository()
+    private val sepetYemekListesi : MutableLiveData<List<SepetYemekler>>
 
     init {
         sepetiYukle()
@@ -21,7 +21,7 @@ class SepetToDetayViewModel: ViewModel() {
                     kullanici_adi: String,){
         ydao.yemekSepeteEkle(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,kullanici_adi)
     }
-    fun sepetiYukle(){
+   private fun sepetiYukle(){
         ydao.sepettekiYemekler()
     }
 }

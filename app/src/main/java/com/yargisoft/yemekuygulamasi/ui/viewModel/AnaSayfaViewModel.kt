@@ -7,21 +7,15 @@ import com.yargisoft.yemekuygulamasi.data.repo.YemeklerDaoRepository
 
 class AnaSayfaViewModel: ViewModel() {
 
-    val yemekRepo = YemeklerDaoRepository()
+    private val yemekRepo = YemeklerDaoRepository()
     val yemeklerListesi : MutableLiveData<List<Yemekler>>
-
 
     init {
         yemekleriYukle()
         yemeklerListesi = yemekRepo.yemekleriGoster()
     }
-
     fun yemekleriYukle(){
         yemekRepo.yemekleriYukle()
     }
 
-
-    /*fun sepeteGecis(){
-        yemekRepo.sepeteGecis()
-    }*/
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.yargisoft.yemekuygulamasi.data.repo.YemeklerDaoRepository
 
 class YemekDetayViewModel :ViewModel() {
-    val yrepo = YemeklerDaoRepository()
+    private val yrepo = YemeklerDaoRepository()
 
     fun sepeteEkle( yemek_adi: String,
                     yemek_resim_adi: String,

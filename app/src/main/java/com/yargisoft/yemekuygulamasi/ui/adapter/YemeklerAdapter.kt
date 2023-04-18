@@ -13,8 +13,8 @@ import com.yargisoft.yemekuygulamasi.ui.viewModel.AnaSayfaViewModel
 
 
 class YemeklerAdapter(
-    var mContext: Context,
-    var yemeklerListesi: List<Yemekler>,
+    private var mContext: Context,
+    private var yemeklerListesi: List<Yemekler>,
     var viewModel: AnaSayfaViewModel
 ) :
     RecyclerView.Adapter<YemeklerAdapter.CardTasarimTutucu>() {
@@ -42,20 +42,19 @@ class YemeklerAdapter(
     override fun onBindViewHolder(holder: CardTasarimTutucu, position: Int) {
         val yemek = yemeklerListesi.get(position)
         val t = holder.tasarim
+        t.cardUrunAd = yemek.yemek_adi
+        t.cardUrunFiyat = "${yemek.yemek_fiyat}₺"
 
-        t.yemekAd.text = yemek.yemek_adi
-        t.yemekFiyat.text = "${yemek.yemek_fiyat}₺"
-
-        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${yemek.yemek_resim_adi}"
-        Glide.with(mContext).load(url).override(300, 300).into(t.yemekResim)
-
+        try {
+            val url = "http://kasimadalan.pe.hu/yemekler/resimler/${yemek.yemek_resim_adi}"
+            Glide.with(mContext).load(url).override(300, 300).into(t.yemekResim)
+        } catch (e: Exception) {
+            println(e.message)
+        }
         t.cardAnaSayfa.setOnClickListener {
             val gecis = AnaSayfaFragmentDirections.yemekDetayGecis(yemek = yemek)
             Navigation.findNavController(it).navigate(gecis)
         }
-
-
     }
-
 
 }

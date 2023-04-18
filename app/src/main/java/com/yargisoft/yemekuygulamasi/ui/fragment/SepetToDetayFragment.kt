@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
@@ -12,9 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.yargisoft.yemekuygulamasi.R
 import com.yargisoft.yemekuygulamasi.databinding.FragmentSepetToDetayBinding
-import com.yargisoft.yemekuygulamasi.databinding.FragmentYemekDetayBinding
 import com.yargisoft.yemekuygulamasi.ui.viewModel.SepetToDetayViewModel
-import com.yargisoft.yemekuygulamasi.ui.viewModel.YemekDetayViewModel
 
 class SepetToDetayFragment : Fragment() {
     private lateinit var binding: FragmentSepetToDetayBinding
@@ -32,14 +31,12 @@ class SepetToDetayFragment : Fragment() {
         binding.yemekNesnesi = gelenYemek
         binding.yemekFiyat = "${gelenYemek.yemek_fiyat}₺"
         binding.toolbarTitle = "Yemek Dünyası"
-
         try {
             val url = "http://kasimadalan.pe.hu/yemekler/resimler/${gelenYemek.yemek_resim_adi}"
             Glide.with(this).load(url).override(300, 300).into(binding.sepetDetayImageView)
         }catch (e:java.lang.Exception){
             println("${e.message}")
         }
-
         return binding.root
     }
 
@@ -63,5 +60,6 @@ class SepetToDetayFragment : Fragment() {
                    yemek_siparis_adet: Int,
                    kullanici_adi: String){
         viewModel.sepeteEkle(yemek_adi , yemek_resim_adi , yemek_fiyat , yemek_siparis_adet , kullanici_adi )
+        Toast.makeText(context,"$yemek_adi sepete eklendi", Toast.LENGTH_SHORT).show()
     }
 }

@@ -7,22 +7,18 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler
-import com.yargisoft.yemekuygulamasi.databinding.CardTasarimYemekBinding
 import com.yargisoft.yemekuygulamasi.databinding.SepetTasarimYemekBinding
-import com.yargisoft.yemekuygulamasi.ui.fragment.AnaSayfaFragmentDirections
 import com.yargisoft.yemekuygulamasi.ui.fragment.SepetFragmentDirections
-import com.yargisoft.yemekuygulamasi.ui.fragment.SepetToDetayFragmentDirections
-import com.yargisoft.yemekuygulamasi.ui.fragment.YemekDetayFragmentDirections
 import com.yargisoft.yemekuygulamasi.ui.viewModel.SepetViewModel
 
 class SepetYemeklerAdapter(
-    var mContext: Context,
-    var sepetYemekList: List<SepetYemekler>,
+    private var mContext: Context,
+    private var sepetYemekList: List<SepetYemekler>,
     var viewModel: SepetViewModel
 ) :
-    RecyclerView.Adapter<SepetYemeklerAdapter.sepetTasarimHolder>() {
+    RecyclerView.Adapter<SepetYemeklerAdapter.SepetTasarimHolder>() {
 
-    inner class sepetTasarimHolder(tasarim: SepetTasarimYemekBinding) :
+    inner class SepetTasarimHolder(tasarim: SepetTasarimYemekBinding) :
         RecyclerView.ViewHolder(tasarim.root) {
         var tasarim: SepetTasarimYemekBinding
 
@@ -31,27 +27,32 @@ class SepetYemeklerAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): sepetTasarimHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SepetTasarimHolder {
         val layoutInflater = LayoutInflater.from(mContext)
         val tasarim = SepetTasarimYemekBinding.inflate(layoutInflater, parent, false)
-        return sepetTasarimHolder(tasarim)
+        return SepetTasarimHolder(tasarim)
     }
 
     override fun getItemCount(): Int {
         return sepetYemekList.size
     }
 
-    override fun onBindViewHolder(holder: sepetTasarimHolder, position: Int) {
+    override fun onBindViewHolder(holder: SepetTasarimHolder, position: Int) {
         val sepetYemek = sepetYemekList.get(position)
         val t = holder.tasarim
-        t.sepetUrunAdet.text = sepetYemek.yemek_siparis_adet.toString()
-        t.sepetUrunIsim.text = sepetYemek.yemek_adi
-        t.sepetUrunFiyat.text = "${sepetYemek.yemek_fiyat.toString()}₺"
-        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${sepetYemek.yemek_resim_adi}"
-        Glide.with(mContext).load(url).override(300, 300).into(t.imageViewSepet)
+        t.sepetUrunSiparisAdet = "${sepetYemek.yemek_siparis_adet}"
+        t.sepetCardUrunAd = sepetYemek.yemek_adi
+        t.sepetCardUrunFiyat = "${sepetYemek.yemek_fiyat}₺"
+
+        try {
+            val url = "http://kasimadalan.pe.hu/yemekler/resimler/${sepetYemek.yemek_resim_adi}"
+            Glide.with(mContext).load(url).override(300, 300).into(t.imageViewSepet)
+        }catch (e:Exception){
+            println(e.message)
+        }
 
         t.btnDecreaseQuantity.setOnClickListener {
-            var sepettekiAdet = sepetYemek.yemek_siparis_adet
+            val sepettekiAdet = sepetYemek.yemek_siparis_adet
             if (sepettekiAdet <= 1) {
                 viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id, sepetYemek.kullanici_adi)
             } else {

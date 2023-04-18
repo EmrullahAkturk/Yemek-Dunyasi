@@ -1,22 +1,12 @@
 package com.yargisoft.yemekuygulamasi.data.repo
 
-import android.os.Bundle
-import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
-import androidx.navigation.Navigation
-import com.yargisoft.yemekuygulamasi.R
 import com.yargisoft.yemekuygulamasi.data.entity.*
 import com.yargisoft.yemekuygulamasi.retrofit.ApiUtils
 import com.yargisoft.yemekuygulamasi.retrofit.YemeklerDao
-import com.yargisoft.yemekuygulamasi.ui.adapter.SepetYemeklerAdapter
-import com.yargisoft.yemekuygulamasi.ui.viewModel.AnaSayfaViewModel
-import com.yargisoft.yemekuygulamasi.ui.viewModel.YemekDetayViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Field
 
 class YemeklerDaoRepository {
     var yemeklerListesi: MutableLiveData<List<Yemekler>>
@@ -25,7 +15,7 @@ class YemeklerDaoRepository {
         get() {
            return emptyList()
         }
-    var ydao: YemeklerDao
+   private var ydao: YemeklerDao
 
     init {
         ydao = ApiUtils.getYemeklerDao()
@@ -63,7 +53,7 @@ class YemeklerDaoRepository {
     ) {
         sepettekiYemekler()
         if (sepetYemekListesi.value != null) {
-            var checked: Boolean = false
+            var checked = false
             var ekliId = -1
             var ekliAdet = -1
             for (yemek in sepetYemekListesi.value!!) {
@@ -73,7 +63,7 @@ class YemeklerDaoRepository {
                     ekliAdet = yemek.yemek_siparis_adet
                 }
             }
-            if (checked == false) {
+            if (!checked) {
                 sepeteEkleKisa(
                     yemek_adi,
                     yemek_resim_adi,
@@ -158,7 +148,7 @@ class YemeklerDaoRepository {
 
     }
 
-    fun sepeteEkleKisa(
+    private fun sepeteEkleKisa(
         yemek_adi: String,
         yemek_resim_adi: String,
         yemek_fiyat: Int,
@@ -175,7 +165,6 @@ class YemeklerDaoRepository {
             .enqueue(object : Callback<CRUDCevap> {
                 override fun onResponse(call: Call<CRUDCevap>, response: Response<CRUDCevap>) {
                     sepettekiYemekler()
-                    //Toast.makeText(,"Ürün sepete Eklendi",Toast.LENGTH_LONG).show()
                 }
 
                 override fun onFailure(call: Call<CRUDCevap>, t: Throwable) {

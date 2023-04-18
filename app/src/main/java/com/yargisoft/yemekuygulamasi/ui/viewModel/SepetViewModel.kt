@@ -5,11 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler
-import com.yargisoft.yemekuygulamasi.data.entity.Yemekler
 import com.yargisoft.yemekuygulamasi.data.repo.YemeklerDaoRepository
 
 class SepetViewModel:ViewModel() {
-    val ydao = YemeklerDaoRepository()
+    private val ydao = YemeklerDaoRepository()
     val sepetYemekListesi : MutableLiveData<List<SepetYemekler>>
     init {
         sepettekiYemekleriYukle()

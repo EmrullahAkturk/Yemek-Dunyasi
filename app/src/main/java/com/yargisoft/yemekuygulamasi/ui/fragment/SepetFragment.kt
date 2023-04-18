@@ -5,16 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.yargisoft.yemekuygulamasi.R
 import com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler
 import com.yargisoft.yemekuygulamasi.databinding.FragmentSepetBinding
 import com.yargisoft.yemekuygulamasi.ui.adapter.SepetYemeklerAdapter
-import com.yargisoft.yemekuygulamasi.ui.adapter.YemeklerAdapter
 import com.yargisoft.yemekuygulamasi.ui.viewModel.SepetViewModel
 
 class SepetFragment : Fragment() {
@@ -37,12 +36,7 @@ class SepetFragment : Fragment() {
                 }
             val adapter = SepetYemeklerAdapter(requireContext(), it, viewModel)
             binding.sepetYemekAdapter = adapter
-
-           /* if (tutar == 0){
-                binding.urunYazisi = "Sepetinizde Ürün Bulunmuyor"
-            }*/
-            TODO("Sepet boş yazısı düzenlenecek")
-            binding.sepetTutari = "${tutar} ₺"
+            binding.sepetTutari = "$tutar ₺"
         }
 
         return binding.root
@@ -61,6 +55,7 @@ class SepetFragment : Fragment() {
 
     fun sepetiTemizle(it: View) {
         viewModel.sepetiTemizle(it)
+        Toast.makeText(context,"Sepet Temizlendi", Toast.LENGTH_SHORT).show()
     }
 
     fun fabAnaSayfa(it: View) {

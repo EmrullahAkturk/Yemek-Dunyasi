@@ -10,9 +10,7 @@
         <variable
             name="sepetYemekAdapter"
             type="com.yargisoft.yemekuygulamasi.ui.adapter.SepetYemeklerAdapter" />
-        <variable
-            name="urunYazisi"
-            type="String" />
+
         <variable
             name="sepetTutari"
             type="String" />
@@ -27,7 +25,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="-80dp">
 
 
             <androidx.appcompat.widget.Toolbar
@@ -74,29 +74,43 @@
             </androidx.appcompat.widget.Toolbar>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvSepet"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:adapter="@{sepetYemekAdapter}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sptTextView" />
-
-            <TextView
-                android:id="@+id/sptTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Sepet"
-                android:textColor="@color/textColor"
-                android:textSize="25sp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:fillViewport="true"
+                app:layout_constraintBottom_toTopOf="@+id/cardView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbarSepet" />
+                app:layout_constraintTop_toBottomOf="@+id/sptTextView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvSepet"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adapter="@{sepetYemekAdapter}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:layout_editor_absoluteY="231dp">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabSepetAnaSayfa"
@@ -115,18 +129,17 @@
                 app:tint="@android:color/white" />
 
             <TextView
-                android:id="@+id/tvUrunYok"
+                android:id="@+id/sptTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{urunYazisi}"
+                android:layout_marginTop="8dp"
+                android:text="Sepet"
                 android:textColor="@color/textColor"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+                app:layout_constraintTop_toBottomOf="@+id/toolbarSepet" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
