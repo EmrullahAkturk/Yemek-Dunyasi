@@ -20,6 +20,10 @@
         <variable
             name="toolbarTitle"
             type="String" />
+        <variable
+            name="urunAdet"
+            type="String"
+             />
 
     </data>
 
@@ -102,7 +106,7 @@
                     android:id="@+id/tvyemekDetay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/abeezee"
                     android:text="Ürün Detayı"
                     android:textColor="@color/textColor"
@@ -149,19 +153,58 @@
                     app:layout_constraintTop_toBottomOf="@+id/yemekDetayAd" />
 
                 <Button
+                    android:id="@+id/btnDecreaseQuantityDetay"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="130dp"
+                    android:background="@drawable/ic_remove"
+                    android:padding="0dp"
+                    android:textSize="32sp"
+                    app:iconPadding="0dp"
+                    android:onClick="@{()->yemekDetayFragment.adetAzalt(urunAdet)}"
+                    app:layout_constraintBottom_toTopOf="@+id/btnSepeteEkle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/yemekDetayFiyat" />
+
+                <Button
+                    android:id="@+id/btnIncreaseQuantityDetay"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="130dp"
+                    android:background="@drawable/ic_add"
+                    android:textSize="16sp"
+                    android:onClick="@{()->yemekDetayFragment.adetArttir(urunAdet)}"
+                    app:layout_constraintBottom_toTopOf="@+id/btnSepeteEkle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/yemekDetayFiyat" />
+
+                <TextView
+                    android:id="@+id/sepetUrunAdetDetay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@{urunAdet}"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnSepeteEkle"
+                    app:layout_constraintEnd_toStartOf="@+id/btnIncreaseQuantityDetay"
+                    app:layout_constraintStart_toEndOf="@+id/btnDecreaseQuantityDetay"
+                    app:layout_constraintTop_toBottomOf="@+id/yemekDetayFiyat"
+                    app:layout_constraintVertical_bias="0.6" />
+
+                <Button
                     android:id="@+id/btnSepeteEkle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="89dp"
                     android:backgroundTint="@color/textColor"
-                    android:onClick='@{()->yemekDetayFragment.sepeteEkle(yemekNesnesi.yemek_adi,yemekNesnesi.yemek_resim_adi,yemekNesnesi.yemek_fiyat,1,"emrullah")}'
+                    android:onClick='@{()->yemekDetayFragment.sepeteEkle(yemekNesnesi.yemek_adi,yemekNesnesi.yemek_resim_adi,yemekNesnesi.yemek_fiyat,urunAdet ,"emrullah")}'
                     android:text="Sepete Ekle"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/yemekDetayFiyat" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

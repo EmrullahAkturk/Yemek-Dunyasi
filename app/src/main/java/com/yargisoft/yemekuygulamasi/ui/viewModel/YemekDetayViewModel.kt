@@ -13,6 +13,9 @@ class YemekDetayViewModel :ViewModel() {
                     kullanici_adi: String,){
         yrepo.yemekSepeteEkle(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,kullanici_adi)
     }
+    fun sepetiYukle() {
+        yrepo.sepettekiYemekler()
+    }
 
 
 }

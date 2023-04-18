@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.yargisoft.yemekuygulamasi.R
+import com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler
 import com.yargisoft.yemekuygulamasi.databinding.FragmentSepetBinding
 import com.yargisoft.yemekuygulamasi.ui.adapter.SepetYemeklerAdapter
 import com.yargisoft.yemekuygulamasi.ui.adapter.YemeklerAdapter
@@ -18,41 +19,51 @@ import com.yargisoft.yemekuygulamasi.ui.viewModel.SepetViewModel
 
 class SepetFragment : Fragment() {
 
-    private lateinit var binding:FragmentSepetBinding
+    private lateinit var binding: FragmentSepetBinding
     private lateinit var viewModel: SepetViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_sepet, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sepet, container, false)
         binding.sepetFragment = this
-        binding.rvSepet.layoutManager =StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        binding.rvSepet.layoutManager =
+            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         viewModel.sepetYemekListesi.observe(viewLifecycleOwner) {
-            if(viewModel.sepetYemekListesi.value!!.size ==  0) {
-                binding.urunYazisi = "Sepetinizde ürün yok"
-            }else{
-                val adapter = SepetYemeklerAdapter(requireContext(), it, viewModel)
-                binding.sepetYemekAdapter = adapter
-            }
+            var tutar = 0
+            it.forEach { sepetYemekler: SepetYemekler ->
+                    tutar += sepetYemekler.yemek_fiyat * sepetYemekler.yemek_siparis_adet
+                }
+            val adapter = SepetYemeklerAdapter(requireContext(), it, viewModel)
+            binding.sepetYemekAdapter = adapter
+
+           /* if (tutar == 0){
+                binding.urunYazisi = "Sepetinizde Ürün Bulunmuyor"
+            }*/
+            TODO("Sepet boş yazısı düzenlenecek")
+            binding.sepetTutari = "${tutar} ₺"
         }
 
         return binding.root
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val tempViewModel : SepetViewModel by viewModels()
+        val tempViewModel: SepetViewModel by viewModels()
         viewModel = tempViewModel
     }
 
     override fun onResume() {
-        super.onResume()
         viewModel.sepettekiYemekleriYukle()
+        super.onResume()
     }
-    fun sepetiTemizle(it:View){
+
+    fun sepetiTemizle(it: View) {
         viewModel.sepetiTemizle(it)
     }
-    fun fabAnaSayfa(it:View){
+
+    fun fabAnaSayfa(it: View) {
         Navigation.findNavController(it).navigate(R.id.sepetToAnaSayfa)
     }
 

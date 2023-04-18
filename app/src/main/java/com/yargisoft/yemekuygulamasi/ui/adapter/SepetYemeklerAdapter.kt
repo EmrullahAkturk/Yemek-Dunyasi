@@ -25,10 +25,12 @@ class SepetYemeklerAdapter(
     inner class sepetTasarimHolder(tasarim: SepetTasarimYemekBinding) :
         RecyclerView.ViewHolder(tasarim.root) {
         var tasarim: SepetTasarimYemekBinding
+
         init {
             this.tasarim = tasarim
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): sepetTasarimHolder {
         val layoutInflater = LayoutInflater.from(mContext)
         val tasarim = SepetTasarimYemekBinding.inflate(layoutInflater, parent, false)
@@ -50,28 +52,37 @@ class SepetYemeklerAdapter(
 
         t.btnDecreaseQuantity.setOnClickListener {
             var sepettekiAdet = sepetYemek.yemek_siparis_adet
-            if(sepettekiAdet <= 1){
-                viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id,sepetYemek.kullanici_adi)
-            }else{
-                viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id,sepetYemek.kullanici_adi)
-                viewModel.sepeteEkle(sepetYemek.yemek_adi,sepetYemek.yemek_resim_adi,sepetYemek.yemek_fiyat, -1 , sepetYemek.kullanici_adi)
+            if (sepettekiAdet <= 1) {
+                viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id, sepetYemek.kullanici_adi)
+            } else {
+                viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id, sepetYemek.kullanici_adi)
+                viewModel.sepeteEkle(
+                    sepetYemek.yemek_adi,
+                    sepetYemek.yemek_resim_adi,
+                    sepetYemek.yemek_fiyat,
+                    -1,
+                    sepetYemek.kullanici_adi
+                )
             }
-        }
 
+        }
         t.btnIncreaseQuantity.setOnClickListener {
-            var sepettekiAdet = sepetYemek.yemek_siparis_adet
-            viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id,sepetYemek.kullanici_adi)
-            viewModel.sepeteEkle(sepetYemek.yemek_adi,sepetYemek.yemek_resim_adi,sepetYemek.yemek_fiyat, 1  , sepetYemek.kullanici_adi)
-        }
+            viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id, sepetYemek.kullanici_adi)
+            viewModel.sepeteEkle(
+                sepetYemek.yemek_adi,
+                sepetYemek.yemek_resim_adi,
+                sepetYemek.yemek_fiyat,
+                1,
+                sepetYemek.kullanici_adi
+            )
 
+        }
         t.urunCardView.setOnClickListener {
-            val gecis = SepetFragmentDirections.sepetToDetay(sepetYemek=sepetYemek)
+            val gecis = SepetFragmentDirections.sepetToDetay(sepetYemek = sepetYemek)
             Navigation.findNavController(it).navigate(gecis)
         }
-
-
-
     }
+
 
 
 }

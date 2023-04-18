@@ -2,6 +2,8 @@ package com.yargisoft.yemekuygulamasi.ui.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +32,7 @@ class YemekDetayFragment : Fragment() {
         binding.yemekNesnesi = gelenYemek
         binding.yemekFiyat = "${gelenYemek.yemek_fiyat.toString()}₺"
         binding.toolbarTitle = "Yemek Dünyası"
+        binding.urunAdet = "1"
 
         try {
             val url = "http://kasimadalan.pe.hu/yemekler/resimler/${gelenYemek.yemek_resim_adi}"
@@ -45,13 +48,31 @@ class YemekDetayFragment : Fragment() {
         viewModel = tempViewModel
     }
 
+    override fun onResume() {
+        super.onResume()
+        /* Detay sayfasına geldiğimizde sepette hangi ürünlerin
+            var olduğunu bilmemiz için listemizi güncellememiz gerekiyor.
+            Bu yüzden alttaki metodu çalıştırdık*/
+        viewModel.sepetiYukle()
+    }
 
     fun sepeteEkle(yemek_adi: String,
                         yemek_resim_adi: String,
                         yemek_fiyat: Int,
-                        yemek_siparis_adet: Int,
+                        yemek_siparis_adet: String,
                         kullanici_adi: String){
-        viewModel.sepeteEkle(yemek_adi , yemek_resim_adi , yemek_fiyat , yemek_siparis_adet , kullanici_adi )
+
+        var yeniAdet = yemek_siparis_adet.toInt()
+        viewModel.sepeteEkle(yemek_adi , yemek_resim_adi , yemek_fiyat , yeniAdet , kullanici_adi )
+    }
+
+    fun adetArttir(urunAdet:String){
+        binding.urunAdet = (urunAdet.toInt() + 1).toString()
+    }
+    fun adetAzalt(urunAdet:String){
+        if (urunAdet.toInt()>1){
+            binding.urunAdet = (urunAdet.toInt() - 1).toString()
+        }
     }
     fun fabSepetTikla(it:View){
         Navigation.findNavController(it).navigate(R.id.detayToSepet)

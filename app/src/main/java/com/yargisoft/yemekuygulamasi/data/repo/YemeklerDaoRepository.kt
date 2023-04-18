@@ -10,6 +10,7 @@ import com.yargisoft.yemekuygulamasi.R
 import com.yargisoft.yemekuygulamasi.data.entity.*
 import com.yargisoft.yemekuygulamasi.retrofit.ApiUtils
 import com.yargisoft.yemekuygulamasi.retrofit.YemeklerDao
+import com.yargisoft.yemekuygulamasi.ui.adapter.SepetYemeklerAdapter
 import com.yargisoft.yemekuygulamasi.ui.viewModel.AnaSayfaViewModel
 import com.yargisoft.yemekuygulamasi.ui.viewModel.YemekDetayViewModel
 import retrofit2.Call
@@ -20,6 +21,10 @@ import retrofit2.http.Field
 class YemeklerDaoRepository {
     var yemeklerListesi: MutableLiveData<List<Yemekler>>
     var sepetYemekListesi: MutableLiveData<List<SepetYemekler>>
+    val list2 : List<SepetYemekler>
+        get() {
+           return emptyList()
+        }
     var ydao: YemeklerDao
 
     init {
@@ -42,18 +47,21 @@ class YemeklerDaoRepository {
                 val liste = response.body()!!.yemekler
                 yemeklerListesi.value = liste
             }
-
             override fun onFailure(call: Call<YemeklerCevap>, t: Throwable) {
+                println("Hata: Menü yükle")
+
             }
         })
     }
 
-    fun yemekSepeteEkle(yemek_adi: String,
+    fun yemekSepeteEkle(
+        yemek_adi: String,
         yemek_resim_adi: String,
         yemek_fiyat: Int,
         yemek_siparis_adet: Int,
         kullanici_adi: String,
     ) {
+        sepettekiYemekler()
         if (sepetYemekListesi.value != null) {
             var checked: Boolean = false
             var ekliId = -1
@@ -66,15 +74,31 @@ class YemeklerDaoRepository {
                 }
             }
             if (checked == false) {
-                sepeteEkleKisa(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,kullanici_adi)
+                sepeteEkleKisa(
+                    yemek_adi,
+                    yemek_resim_adi,
+                    yemek_fiyat,
+                    yemek_siparis_adet,
+                    kullanici_adi
+                )
             } else {
-                sepettenYemekSil(ekliId,kullanici_adi)
-                sepeteEkleKisa(yemek_adi,yemek_resim_adi,yemek_fiyat,ekliAdet+yemek_siparis_adet,kullanici_adi)
-
+                sepettenYemekSil(ekliId, kullanici_adi)
+                sepeteEkleKisa(
+                    yemek_adi,
+                    yemek_resim_adi,
+                    yemek_fiyat,
+                    ekliAdet + yemek_siparis_adet,
+                    kullanici_adi
+                )
             }
-        }
-        else {
-                sepeteEkleKisa(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,kullanici_adi)
+        } else {
+            sepeteEkleKisa(
+                yemek_adi,
+                yemek_resim_adi,
+                yemek_fiyat,
+                yemek_siparis_adet,
+                kullanici_adi
+            )
         }
     }
 
@@ -84,36 +108,56 @@ class YemeklerDaoRepository {
                 sepettekiYemekler()
             }
             override fun onFailure(call: Call<CRUDCevap>, t: Throwable) {
+                println("Hata: Sepetteki yemekten sil")
             }
         })
     }
 
+
     fun sepettekiYemekler() {
         ydao.sepettekiYemekleriGetir("emrullah").enqueue(object : Callback<SepetYemekCevap> {
-            override fun onResponse(call: Call<SepetYemekCevap>,response: Response<SepetYemekCevap>) {
+            override fun onResponse(
+                call: Call<SepetYemekCevap>,
+                response: Response<SepetYemekCevap>
+            ) {
                 val list = response.body()!!.sepet_yemekler
                 sepetYemekListesi.value = list
+
             }
             override fun onFailure(call: Call<SepetYemekCevap>, t: Throwable) {
+                println("Hata: Sepetteki yemekler")
+                /*Response olarak SepetCevap nesnesinden bir instance bekliyoruz. Fakat sepetimizde ürün olmadığında
+                 web servis response olarak bir liste değil, 1 değerini dönderiyor.
+                 Bu sebeple veritabanı halihazırda boş ise veya son eleman silinip veritabanı boşaltılırsa
+                 bir liste dönmediği için onFailure metodu çalışmakta. Bundan dolayı da sepetimizdeki son elemanı silmek
+                  istediğimizde response metodu çalışmadığı için listemizin value değeri güncellenmemekte
+                  ve observer tetiklenmemektedir. Bu nedenle sepetimizin boş görünebilmesi için sepetimize boş bir liste atıyoruz*/
+                sepetYemekListesi.value = list2
+
             }
         })
     }
 
     fun sepetiTemizle() {
         ydao.sepettekiYemekleriGetir("emrullah").enqueue(object : Callback<SepetYemekCevap> {
-            override fun onResponse(call: Call<SepetYemekCevap>,response: Response<SepetYemekCevap>) {
+            override fun onResponse(
+                call: Call<SepetYemekCevap>,
+                response: Response<SepetYemekCevap>
+            ) {
                 val list = response.body()!!.sepet_yemekler
                 sepetYemekListesi.value = list
                 for (eleman in list) {
                     sepettenYemekSil(eleman.sepet_yemek_id, eleman.kullanici_adi)
                 }
-                sepettekiYemekler()
+                 sepettekiYemekler()
             }
+
             override fun onFailure(call: Call<SepetYemekCevap>, t: Throwable) {
             }
         })
 
     }
+
     fun sepeteEkleKisa(
         yemek_adi: String,
         yemek_resim_adi: String,
@@ -130,13 +174,12 @@ class YemeklerDaoRepository {
         )
             .enqueue(object : Callback<CRUDCevap> {
                 override fun onResponse(call: Call<CRUDCevap>, response: Response<CRUDCevap>) {
-                    println(CRUDCevap(1, "hata").success)
                     sepettekiYemekler()
                     //Toast.makeText(,"Ürün sepete Eklendi",Toast.LENGTH_LONG).show()
                 }
 
                 override fun onFailure(call: Call<CRUDCevap>, t: Throwable) {
-                    println(CRUDCevap(1, "hata").message)
+                   println("Hata: sepete ekle")
                 }
             })
 
