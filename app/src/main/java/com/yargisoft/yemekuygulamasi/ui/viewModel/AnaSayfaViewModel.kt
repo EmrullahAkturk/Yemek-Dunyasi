@@ -17,5 +17,9 @@ class AnaSayfaViewModel: ViewModel() {
     fun yemekleriYukle(){
         yemekRepo.yemekleriYukle()
     }
+    fun urunAra(aramaKelimesi: String) {
+        yemekRepo.anaSayfaUrunAra(aramaKelimesi)
+
+    }
 
 }

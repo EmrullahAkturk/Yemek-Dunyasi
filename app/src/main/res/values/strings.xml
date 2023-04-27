@@ -2,4 +2,19 @@
     <string name="app_name">Yemek Uygulamasi</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sepeteEkle">Sepete Ekle</string>
+    <string name="app_isim">Yemek Dünyası</string>
+    <string name="date">Tarih</string>
+    <string name="card_owner">Kart Sahibi</string>
+    <string name="card_number">Kart Numarası</string>
+    <string name="adress">Adres</string>
+    <string name="save_adress">Adresi Kaydet</string>
+    <string name="save_card">Kartı Kaydet</string>
+    <string name="cvv">CVV</string>
+    <string name="d3_secure">3D Secure</string>
+    <string name="pay_text">Ödeme Yap</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+
+
 </resources>

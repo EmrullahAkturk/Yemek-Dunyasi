@@ -32,8 +32,8 @@ class SepetFragment : Fragment() {
         viewModel.sepetYemekListesi.observe(viewLifecycleOwner) {
             var tutar = 0
             it.forEach { sepetYemekler: SepetYemekler ->
-                    tutar += sepetYemekler.yemek_fiyat * sepetYemekler.yemek_siparis_adet
-                }
+                tutar += sepetYemekler.yemek_fiyat * sepetYemekler.yemek_siparis_adet
+            }
             val adapter = SepetYemeklerAdapter(requireContext(), it, viewModel)
             binding.sepetYemekAdapter = adapter
             binding.sepetTutari = "$tutar ₺"
@@ -55,11 +55,21 @@ class SepetFragment : Fragment() {
 
     fun sepetiTemizle(it: View) {
         viewModel.sepetiTemizle(it)
-        Toast.makeText(context,"Sepet Temizlendi", Toast.LENGTH_SHORT).show()
     }
 
     fun fabAnaSayfa(it: View) {
         Navigation.findNavController(it).navigate(R.id.sepetToAnaSayfa)
+    }
+
+    fun satinAl(it: View) {
+        if (viewModel.sepetYemekListesi.value != null) {
+
+            if (viewModel.sepetYemekListesi.value!!.isEmpty()) {
+                Toast.makeText(requireContext(),"Sepetiniz boş. Lütfen ürün ekleyin",Toast.LENGTH_LONG).show()
+            }else{
+                Navigation.findNavController(it).navigate(R.id.satinAlGecis)
+            }
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.yargisoft.yemekuygulamasi.ui.fragment
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ class SepetToDetayFragment : Fragment() {
         binding.yemekNesnesi = gelenYemek
         binding.yemekFiyat = "${gelenYemek.yemek_fiyat}₺"
         binding.toolbarTitle = "Yemek Dünyası"
+        binding.urunAdet = "1"
         try {
             val url = "http://kasimadalan.pe.hu/yemekler/resimler/${gelenYemek.yemek_resim_adi}"
             Glide.with(this).load(url).override(300, 300).into(binding.sepetDetayImageView)
@@ -46,6 +48,11 @@ class SepetToDetayFragment : Fragment() {
         viewModel = tempViewModel
     }
 
+    override fun onResume() {
+        viewModel.sepetiYukle()
+        super.onResume()
+    }
+
     fun fabSepetTikla(it:View){
         Navigation.findNavController(it).navigate(R.id.sepetDetayToSepet)
     }
@@ -54,12 +61,38 @@ class SepetToDetayFragment : Fragment() {
         Navigation.findNavController(it).navigate(R.id.sepetDetayToMain)
     }
 
+    fun adetArttir(urunAdet:String){
+        binding.urunAdet = (urunAdet.toInt() + 1).toString()
+    }
+    fun adetAzalt(urunAdet:String){
+        if (urunAdet.toInt()>1){
+            binding.urunAdet = (urunAdet.toInt() - 1).toString()
+        }
+    }
+
     fun sepeteEkle(yemek_adi: String,
                    yemek_resim_adi: String,
                    yemek_fiyat: Int,
-                   yemek_siparis_adet: Int,
+                   yemek_siparis_adet: String,
                    kullanici_adi: String){
-        viewModel.sepeteEkle(yemek_adi , yemek_resim_adi , yemek_fiyat , yemek_siparis_adet , kullanici_adi )
+        val yeniAdet = yemek_siparis_adet.toInt()
+        viewModel.sepeteEkle(yemek_adi , yemek_resim_adi , yemek_fiyat , yeniAdet , kullanici_adi )
         Toast.makeText(context,"$yemek_adi sepete eklendi", Toast.LENGTH_SHORT).show()
+        btnHandler()
+    }
+
+    fun btnHandler(){
+        //Butona ard arda tıklanmasını önlemek iççin 1 dakikalık gecikme ekledik
+        binding.btnDetaySepeteEkle.setOnClickListener {
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - YemekDetayFragment.lastClickTime >= 500) {
+                YemekDetayFragment.lastClickTime = currentTime
+            } else {
+                binding.btnDetaySepeteEkle.isEnabled = false
+                Handler().postDelayed({
+                    binding.btnDetaySepeteEkle.isEnabled = true
+                }, 500)
+            }
+        }
     }
 }

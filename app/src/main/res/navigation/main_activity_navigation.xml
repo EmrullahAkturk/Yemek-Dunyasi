@@ -58,6 +58,9 @@
             app:destination="@id/sepetToDetayFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/satinAlGecis"
+            app:destination="@id/satinAlFragment" />
     </fragment>
     <fragment
         android:id="@+id/sepetToDetayFragment"
@@ -77,4 +80,17 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
+    <fragment
+        android:id="@+id/satinAlFragment"
+        android:name="com.yargisoft.yemekuygulamasi.ui.fragment.SatinAlFragment"
+        android:label="SatinAlFragment" >
+        <action
+            android:id="@+id/siparisOlusturulduGecis"
+            app:destination="@id/siparisOlusturulduFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/siparisOlusturulduFragment"
+        android:name="com.yargisoft.yemekuygulamasi.ui.fragment.SiparisOlusturulduFragment"
+        android:label="fragment_siparis_olusturuldu"
+        tools:layout="@layout/fragment_siparis_olusturuldu" />
 </navigation>

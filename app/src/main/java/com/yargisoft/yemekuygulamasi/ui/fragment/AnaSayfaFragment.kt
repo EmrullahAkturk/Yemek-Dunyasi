@@ -1,7 +1,9 @@
 package com.yargisoft.yemekuygulamasi.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -11,11 +13,12 @@ import com.yargisoft.yemekuygulamasi.R
 import com.yargisoft.yemekuygulamasi.databinding.FragmentAnaSayfaBinding
 import com.yargisoft.yemekuygulamasi.ui.adapter.YemeklerAdapter
 import com.yargisoft.yemekuygulamasi.ui.viewModel.AnaSayfaViewModel
+import com.yargisoft.yemekuygulamasi.ui.viewModel.SepetViewModel
 
-class AnaSayfaFragment : Fragment(){
-
+class AnaSayfaFragment : Fragment() {
     private lateinit var binding: FragmentAnaSayfaBinding
     private lateinit var viewModel: AnaSayfaViewModel
+    private lateinit var viewModelSepet: SepetViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -24,15 +27,58 @@ class AnaSayfaFragment : Fragment(){
         binding.anaSayfaFragment = this
         binding.rv.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+
         viewModel.yemeklerListesi.observe(viewLifecycleOwner) {
             val adapter = YemeklerAdapter(requireContext(), it, viewModel)
             binding.yemeklerAdapter = adapter
         }
+
+
+        // Define Popup Menu
+        val popupMenu = PopupMenu(requireContext(), binding.btnMenuAc)
+        popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+
+        // Set click listener for Popup Menu items
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_item_1 -> {
+                    // Handle popup item 1 click
+                    println("Menu 1 tıklandı")
+                    true
+                }
+                R.id.menu_item_2 -> {
+                    // Handle popup item 2 click
+                    println("Menu 2 tıklandı")
+
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // Set click listener for Popup Button
+       binding.btnMenuAc.setOnClickListener {
+           try {
+               val fieldMPopup =  PopupMenu::class.java.getDeclaredField("mPopup")
+               fieldMPopup.isAccessible = true
+               val mPopup = fieldMPopup.get(popupMenu)
+               mPopup.javaClass.getDeclaredMethod("setForceShowIcon",Boolean::class.java).invoke(mPopup,true)
+           }catch (e:Exception){
+               Log.e("AnaSayfaFragment","Error while showing menu")
+           }finally {
+               popupMenu.show()
+           }
+        }
+
         return binding.root
     }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val tempViewModel: AnaSayfaViewModel by viewModels()
+        val tempViewModel2:SepetViewModel by viewModels()
+        viewModelSepet = tempViewModel2
         viewModel = tempViewModel
     }
 
@@ -41,7 +87,9 @@ class AnaSayfaFragment : Fragment(){
         viewModel.yemekleriYukle()
     }
 
-    fun fabTikla(it:View){
+    fun fabTikla(it: View) {
         Navigation.findNavController(it).navigate(R.id.sepetDetayGecis)
     }
+
+
 }

@@ -4,17 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-       <variable
-           name="sepetToDetayFragment"
-           type="com.yargisoft.yemekuygulamasi.ui.fragment.SepetToDetayFragment" />
+
+        <variable
+            name="sepetToDetayFragment"
+            type="com.yargisoft.yemekuygulamasi.ui.fragment.SepetToDetayFragment" />
+
         <variable
             name="toolbarTitle"
             type="String" />
+
         <variable
             name="yemekNesnesi"
             type="com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler" />
+
         <variable
             name="yemekFiyat"
+            type="String" />
+
+        <variable
+            name="urunAdet"
             type="String" />
 
     </data>
@@ -29,19 +37,23 @@
             android:layout_height="match_parent"
             android:background="@color/bgColor">
 
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabSepetToDetay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="true"
                 android:onClick="@{() -> sepetToDetayFragment.fabSepetTikla(fabSepetToDetay)}"
                 app:backgroundTint="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/ic_sepet"
-                app:tint="@android:color/white" />
+                app:tint="@android:color/white">
+
+
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabSepetToAnaSayfa"
@@ -49,7 +61,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="true"
                 android:onClick="@{() -> sepetToDetayFragment.fabAnaSayfaTikla(fabSepetToAnaSayfa)}"
                 app:backgroundTint="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
@@ -98,7 +109,7 @@
                     android:id="@+id/tvSepetYemekDetay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/abeezee"
                     android:text="Ürün Detayı"
                     android:textColor="@color/textColor"
@@ -145,19 +156,58 @@
                     app:layout_constraintTop_toBottomOf="@+id/sepetYemekDetayAd" />
 
                 <Button
-                    android:id="@+id/btnDetaySepeteEkle"
-                    android:layout_width="0dp"
+                    android:id="@+id/btnDecreaseSepetToDetay"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/ic_remove"
+                    android:onClick="@{()->sepetToDetayFragment.adetAzalt(urunAdet)}"
+                    android:padding="0dp"
+                    android:textSize="32sp"
+                    app:iconPadding="0dp"
+                    app:layout_constraintEnd_toStartOf="@+id/sepetToDetayUrunAdet"
+                    app:layout_constraintTop_toBottomOf="@+id/yemekSepetDetayFiyat" />
+
+                <Button
+                    android:id="@+id/btnIncreaseSepetToDetay"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/ic_add"
+                    android:onClick="@{()->sepetToDetayFragment.adetArttir(urunAdet)}"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/sepetToDetayUrunAdet"
+                    app:layout_constraintTop_toBottomOf="@+id/yemekSepetDetayFiyat" />
+
+
+                <TextView
+                    android:id="@+id/sepetToDetayUrunAdet"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
-                    android:backgroundTint="@color/textColor"
-                    android:onClick='@{()->sepetToDetayFragment.sepeteEkle(yemekNesnesi.yemek_adi,yemekNesnesi.yemek_resim_adi,yemekNesnesi.yemek_fiyat,1,"emrullah")}'
-                    android:text="Sepete Ekle"
+                    android:layout_marginTop="24dp"
+                    android:text="@{urunAdet}"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/yemekSepetDetayFiyat" />
+
+                <Button
+                    android:id="@+id/btnDetaySepeteEkle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/textColor"
+                    android:onClick='@{()->sepetToDetayFragment.sepeteEkle(yemekNesnesi.yemek_adi,yemekNesnesi.yemek_resim_adi,yemekNesnesi.yemek_fiyat,urunAdet,"emrullah")}'
+                    android:text="Sepete Ekle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnDecreaseSepetToDetay" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

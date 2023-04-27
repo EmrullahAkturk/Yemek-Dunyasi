@@ -23,6 +23,9 @@ class YemeklerDaoRepository {
         sepetYemekListesi = MutableLiveData()
     }
 
+    fun anaSayfaUrunAra(aramaKelimesi:String){
+        println("Çalışıyorum")
+    }
     fun yemekleriGoster(): MutableLiveData<List<Yemekler>> {
         return yemeklerListesi
     }

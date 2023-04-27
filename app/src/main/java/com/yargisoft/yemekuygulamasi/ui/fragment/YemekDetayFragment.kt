@@ -1,6 +1,7 @@
 package com.yargisoft.yemekuygulamasi.ui.fragment
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,11 @@ import com.yargisoft.yemekuygulamasi.ui.viewModel.YemekDetayViewModel
 class YemekDetayFragment : Fragment() {
     private lateinit var binding: FragmentYemekDetayBinding
     private lateinit var viewModel: YemekDetayViewModel
+
+    companion object{
+        var lastClickTime = 0L
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +44,11 @@ class YemekDetayFragment : Fragment() {
         }catch (e:java.lang.Exception){
             println("${e.message}")
         }
+
+
+
+
+
         return binding.root
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +74,7 @@ class YemekDetayFragment : Fragment() {
         val yeniAdet = yemek_siparis_adet.toInt()
         viewModel.sepeteEkle(yemek_adi , yemek_resim_adi , yemek_fiyat , yeniAdet , kullanici_adi )
         Toast.makeText(context,"$yemek_adi sepete eklendi", Toast.LENGTH_SHORT).show()
+        btnHandler()
     }
 
     fun adetArttir(urunAdet:String){
@@ -78,5 +90,20 @@ class YemekDetayFragment : Fragment() {
     }
     fun fabAnaSayfaTikla(it:View){
         Navigation.findNavController(it).navigate(R.id.detayToAnaSayfa)
+    }
+
+    fun btnHandler(){
+        //Butona ard arda tıklanmasını önlemek iççin 1 dakikalık gecikme ekledik
+        binding.btnSepeteEkle.setOnClickListener {
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - lastClickTime >= 500) {
+                lastClickTime = currentTime
+            } else {
+                binding.btnSepeteEkle.isEnabled = false
+                Handler().postDelayed({
+                    binding.btnSepeteEkle.isEnabled = true
+                }, 500)
+            }
+        }
     }
 }

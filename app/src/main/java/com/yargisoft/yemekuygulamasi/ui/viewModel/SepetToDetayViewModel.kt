@@ -21,7 +21,7 @@ class SepetToDetayViewModel: ViewModel() {
                     kullanici_adi: String,){
         ydao.yemekSepeteEkle(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,kullanici_adi)
     }
-   private fun sepetiYukle(){
+   fun sepetiYukle(){
         ydao.sepettekiYemekler()
     }
 }

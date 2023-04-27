@@ -12,7 +12,9 @@
         <variable
             name="yemeklerAdapter"
             type="com.yargisoft.yemekuygulamasi.ui.adapter.YemeklerAdapter" />
+
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,11 +39,15 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                app:menu="@menu/arama_menu"
                 app:titleTextColor="@android:color/holo_red_dark">
+
 
                 <TextView
                     android:id="@+id/tvToolbar"
@@ -50,15 +56,27 @@
                     android:layout_gravity="center|top"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/abeezee"
-                    android:text="Yemek Dünyası"
+                    android:text="@string/app_isim"
                     android:textColor="@color/textColor"
                     android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <Button
+                    android:id="@+id/btnMenuAc"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/ic_menu"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:layout_editor_absoluteY="2dp" />
 
             </androidx.appcompat.widget.Toolbar>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -116,20 +134,27 @@
             </androidx.core.widget.NestedScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSepet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:clickable="true"
+            android:contentDescription="@string/sepeteEkle"
             android:onClick="@{() -> anaSayfaFragment.fabTikla(fabSepet)}"
             app:backgroundTint="@color/textColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_sepet"
-            app:tint="@android:color/white" />
+            app:tint="@android:color/white">
+
+
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 </layout>

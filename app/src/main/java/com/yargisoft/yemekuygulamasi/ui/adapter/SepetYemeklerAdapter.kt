@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler
 import com.yargisoft.yemekuygulamasi.databinding.SepetTasarimYemekBinding
 import com.yargisoft.yemekuygulamasi.ui.fragment.SepetFragmentDirections
@@ -54,7 +55,11 @@ class SepetYemeklerAdapter(
         t.btnDecreaseQuantity.setOnClickListener {
             val sepettekiAdet = sepetYemek.yemek_siparis_adet
             if (sepettekiAdet <= 1) {
-                viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id, sepetYemek.kullanici_adi)
+                Snackbar.make(it,"Ürün silinsin mi?", Snackbar.LENGTH_LONG)
+                    .setAction("EVET"){
+                        viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id, sepetYemek.kullanici_adi)
+                    }.show()
+
             } else {
                 viewModel.sepettenYemekSil(sepetYemek.sepet_yemek_id, sepetYemek.kullanici_adi)
                 viewModel.sepeteEkle(
