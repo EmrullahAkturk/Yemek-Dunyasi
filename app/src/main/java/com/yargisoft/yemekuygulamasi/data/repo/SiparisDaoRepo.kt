@@ -40,11 +40,12 @@ class SiparisDaoRepo(application: Application) {
         telefon: String,
         adres: String,
         urunler: String,
-        kullanici_adi: String
+        kullanici_adi: String,
+        tutar:String,
+        siparisTarih:String
     ) {
         val job = CoroutineScope(Dispatchers.Main).launch {
-            val yeniSiparis = Siparisler(0, isim_soyisim, telefon, adres, urunler, kullanici_adi)
-            println("siparis list: ${siparisListesi.value}")
+            val yeniSiparis = Siparisler(0, isim_soyisim, telefon, adres, urunler, kullanici_adi,tutar,siparisTarih)
             vt.siparisDao().siparisEkle(yeniSiparis)
         }
     }
@@ -53,7 +54,6 @@ class SiparisDaoRepo(application: Application) {
     fun adresKaydet(adres: String ,isim_soyisim: String,telefon: String, adresKisa: String ,  ) {
         val job = CoroutineScope(Dispatchers.Main).launch {
             val yeniAdres = Adresler(0,  adres, isim_soyisim,telefon, adresKisa )
-            println("adres list: ${adresListesi.value}")
             vt.siparisDao().adresEkle(yeniAdres)
         }
     }
@@ -69,7 +69,6 @@ class SiparisDaoRepo(application: Application) {
     fun kartKaydet(isim: String,kartNo: String, tarih: String, cvv:String ,kisaAd: String) {
         val job = CoroutineScope(Dispatchers.Main).launch {
             val yeniKart = Kartlar(0, isim, kartNo,tarih , cvv,kisaAd)
-            println("Kart list: ${kartListesi.value}")
             vt.siparisDao().kartEkle(yeniKart)
         }
     }

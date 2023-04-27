@@ -25,9 +25,11 @@ class SatinAlViewModel(application: Application) : AndroidViewModel(application)
         telefon: String,
         adres: String,
         urunler: String,
-        kullanici_adi: String
+        kullanici_adi: String,
+        tutar:String,
+        siparisTarih:String
     ) {
-        sRepo.siparisKaydet(isim_soyisim, telefon, adres, urunler, kullanici_adi)
+        sRepo.siparisKaydet(isim_soyisim, telefon, adres, urunler, kullanici_adi,tutar,siparisTarih)
     }
 
     fun kartKaydet(isim: String,kartNo: String, tarih: String, cvv:String ,kisaAd: String) {

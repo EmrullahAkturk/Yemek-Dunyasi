@@ -28,6 +28,12 @@ data class Siparisler(
     @ColumnInfo(name = "kullanici_adi")
     @NotNull var kullanici_adi: String,
 
+    @ColumnInfo(name = "tutar")
+    @NotNull var tutar: String,
 
-    )  {
+    @ColumnInfo(name = "siparisTarih")
+    @NotNull var siparisTarih: String,
+
+
+    ) :java.io.Serializable {
 }

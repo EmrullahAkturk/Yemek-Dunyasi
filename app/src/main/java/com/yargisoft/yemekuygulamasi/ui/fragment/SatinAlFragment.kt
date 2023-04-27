@@ -1,6 +1,7 @@
 package com.yargisoft.yemekuygulamasi.ui.fragment
 
 import android.app.AlertDialog
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,8 @@ import com.yargisoft.yemekuygulamasi.data.entity.Kartlar
 import com.yargisoft.yemekuygulamasi.databinding.FragmentSatinAlBinding
 import com.yargisoft.yemekuygulamasi.ui.viewModel.SatinAlVMF
 import com.yargisoft.yemekuygulamasi.ui.viewModel.SatinAlViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class SatinAlFragment : Fragment() {
@@ -86,12 +89,20 @@ class SatinAlFragment : Fragment() {
                     kart_kisa
                 )
             }
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+            val current = LocalDateTime.now().format(formatter)
+
+            var urunGorsel = arrayListOf<String>()
+            resources.getStringArray(R.array.yemekler).forEach { urun -> urunGorsel.add(urun)  }
+
             viewModel.siparisOlustur(
                 binding.adSoyad.text.toString(),
                 binding.telefon.text.toString(),
                 binding.adres.text.toString(),
-                " ",
-                "emrullah"
+                urunGorsel.get((0..8).random()).toString(),
+                "emrullah",
+                (0..500).random().toString(),
+                current
             )
             Navigation.findNavController(it).navigate(R.id.siparisOlusturulduGecis)
         }

@@ -16,5 +16,16 @@
     <string name="Open">Open</string>
     <string name="Close">Close</string>
 
+    <string-array name="yemekler">
+        <item>baklava</item>
+        <item>kofte</item>
+        <item>izgarasomon</item>
+        <item>kadayif</item>
+        <item>lazanya</item>
+        <item>makarna</item>
+        <item>pizza</item>
+        <item>sutlac</item>
+        <item>tiramisu</item>
+    </string-array>
 
 </resources>
