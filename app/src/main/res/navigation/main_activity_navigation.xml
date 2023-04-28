@@ -90,12 +90,25 @@
         <action
             android:id="@+id/siparisOlusturulduGecis"
             app:destination="@id/siparisOlusturulduFragment" />
+        <action
+            android:id="@+id/satinAlToAnaSayfa"
+            app:destination="@id/anaSayfaFragment" />
+        <action
+            android:id="@+id/satinAlToSepet"
+            app:destination="@id/sepetFragment" />
     </fragment>
     <fragment
         android:id="@+id/siparisOlusturulduFragment"
         android:name="com.yargisoft.yemekuygulamasi.ui.fragment.SiparisOlusturulduFragment"
         android:label="fragment_siparis_olusturuldu"
-        tools:layout="@layout/fragment_siparis_olusturuldu" />
+        tools:layout="@layout/fragment_siparis_olusturuldu" >
+        <action
+            android:id="@+id/olusturulduToSepet"
+            app:destination="@id/sepetFragment" />
+        <action
+            android:id="@+id/olusturulduToAnaSayfa"
+            app:destination="@id/anaSayfaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/siparislerimFragment"
         android:name="com.yargisoft.yemekuygulamasi.ui.fragment.SiparislerimFragment"

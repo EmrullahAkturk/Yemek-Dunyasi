@@ -41,9 +41,8 @@ class AnaSayfaFragment : Fragment() {
         // Set click listener for Popup Menu items
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menu_hesabim -> {
-                    // Handle popup item 1 click
-                    println("Menu 1 tıklandı")
+                R.id.menu_item_3 -> {
+                    Navigation.findNavController(requireActivity(),R.id.btnMenuAc).navigate(R.id.sepetDetayGecis)
                     true
                 }
                 R.id.menu_siparislerim -> {

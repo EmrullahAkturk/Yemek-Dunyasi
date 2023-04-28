@@ -69,5 +69,9 @@ dependencies {
     implementation "androidx.room:room-ktx:2.5.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
 
+    //Lottie Animation
+    implementation 'com.airbnb.android:lottie:3.7.0'
+
+
 
 }

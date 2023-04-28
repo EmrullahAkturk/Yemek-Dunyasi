@@ -3,9 +3,12 @@ package com.yargisoft.yemekuygulamasi.ui.viewModel
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.snackbar.Snackbar
+import com.yargisoft.yemekuygulamasi.R
 import com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler
 import com.yargisoft.yemekuygulamasi.data.repo.YemeklerDaoRepository
+import com.yargisoft.yemekuygulamasi.ui.fragment.SiparisOlusturulduFragment
 
 class SepetViewModel:ViewModel() {
     private val ydao = YemeklerDaoRepository()
@@ -36,6 +39,7 @@ class SepetViewModel:ViewModel() {
             .setAction("EVET"){
                 ydao.sepetiTemizle()
             }.show()
+
     }
 
 }

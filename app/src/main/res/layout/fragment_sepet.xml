@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="sepetFragment"
             type="com.yargisoft.yemekuygulamasi.ui.fragment.SepetFragment" />
+
         <variable
             name="sepetYemekAdapter"
             type="com.yargisoft.yemekuygulamasi.ui.adapter.SepetYemeklerAdapter" />
@@ -207,5 +209,11 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view_sepet"
+            android:layout_width="300dp"
+            android:layout_height="300dp">
+
+        </com.airbnb.lottie.LottieAnimationView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

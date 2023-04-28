@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.yargisoft.yemekuygulamasi.R
 import com.yargisoft.yemekuygulamasi.data.entity.SepetYemekler
 import com.yargisoft.yemekuygulamasi.databinding.FragmentSepetBinding

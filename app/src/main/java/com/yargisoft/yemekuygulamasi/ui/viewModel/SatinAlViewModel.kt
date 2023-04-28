@@ -12,6 +12,7 @@ import com.yargisoft.yemekuygulamasi.data.repo.YemeklerDaoRepository
 class SatinAlViewModel(application: Application) : AndroidViewModel(application) {
 
     val sRepo = SiparisDaoRepo(application)
+    val yRepo = YemeklerDaoRepository()
     val kartListesi : MutableLiveData<List<Kartlar>>
     val adresListresi : MutableLiveData<List<Adresler>>
 
@@ -49,6 +50,9 @@ class SatinAlViewModel(application: Application) : AndroidViewModel(application)
     }
     fun siparisleriYukle(){
         sRepo.siparisleriYukle()
+    }
+    fun sepetiTemizle(){
+        yRepo.sepetiTemizle()
     }
 
 

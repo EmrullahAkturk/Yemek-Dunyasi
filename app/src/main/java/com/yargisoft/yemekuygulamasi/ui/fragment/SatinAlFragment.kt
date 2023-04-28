@@ -27,8 +27,7 @@ class SatinAlFragment : Fragment() {
     private lateinit var binding: FragmentSatinAlBinding
     private lateinit var viewModel: SatinAlViewModel
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
 
@@ -93,7 +92,7 @@ class SatinAlFragment : Fragment() {
             val current = LocalDateTime.now().format(formatter)
 
             var urunGorsel = arrayListOf<String>()
-            resources.getStringArray(R.array.yemekler).forEach { urun -> urunGorsel.add(urun)  }
+            resources.getStringArray(R.array.yemekler).forEach { urun -> urunGorsel.add(urun) }
 
             viewModel.siparisOlustur(
                 binding.adSoyad.text.toString(),
@@ -104,6 +103,7 @@ class SatinAlFragment : Fragment() {
                 (0..500).random().toString(),
                 current
             )
+            viewModel.sepetiTemizle()
             Navigation.findNavController(it).navigate(R.id.siparisOlusturulduGecis)
         }
 
@@ -125,9 +125,19 @@ class SatinAlFragment : Fragment() {
         }
 
         binding.spinner1.adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item, kartlar
+            requireContext(), android.R.layout.simple_spinner_item, kartlar
         )
+        binding.spinner2.adapter = ArrayAdapter(
+            requireContext(), android.R.layout.simple_spinner_item, adresler
+        )
+
+        binding.fabSepetSatinAl.setOnClickListener{
+            fabSepetTikla(it)
+        }
+        binding.fabAnaSayfaSatinAl.setOnClickListener{
+            fabAnaSayfaTikla(it)
+        }
+
 
         return binding.root
     }
@@ -146,6 +156,14 @@ class SatinAlFragment : Fragment() {
         viewModel.siparisleriYukle()
         viewModel.kartlariYukle()
         viewModel.adresleriYukle()
+    }
+
+    fun fabSepetTikla(it:View){
+        println("tikladin")
+        Navigation.findNavController(it).navigate(R.id.satinAlToSepet)
+    }
+    fun fabAnaSayfaTikla(it:View){
+        Navigation.findNavController(it).navigate(R.id.satinAlToAnaSayfa)
     }
 
 
